@@ -1,0 +1,193 @@
+<!DOCTYPE html
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Task</title>
+
+  <!-- Prism for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+
+  <!-- Marked.js for Markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #424242;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .task-container {
+      max-width: 100%;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .task-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .task-field {
+      margin-bottom: 15px;
+    }
+
+    .task-field label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .task-field .value {
+      padding: 8px;
+      background-color: #f1f1f1;
+      border-radius: 4px;
+      word-break: break-word;
+    }
+
+    /* Corrected styling for Prism syntax highlighting */
+    pre[class*="language-"] {
+      background: #2d2d2d;
+      color: white;
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    /* Remove custom dark background and color for report pre */
+    #report pre {
+      color: inherit;
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    /* Time display styling */
+    #time-display {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .task-container {
+        padding: 15px;
+      }
+
+      .task-field .value {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="task-container">
+    <h2>Task Details</h2>
+    <p id="time-display">No Time found</p>
+
+    <div class="task-field">
+      <label>Title:</label>
+      <div class="value" id="title"></div>
+    </div>
+
+    <div class="task-field">
+      <label>Description:</label>
+      <div class="value" id="description"></div>
+    </div>
+
+    <div class="task-field">
+      <label>Report:</label>
+      <div class="value" id="report"></div>
+    </div>
+
+    <div class="task-field">
+      <label>Category:</label>
+      <div class="value" id="category"></div>
+    </div>
+
+    <div class="task-field">
+      <label>State:</label>
+      <div class="value" id="state"></div>
+    </div>
+
+    <div class="task-field">
+      <label>Priority:</label>
+      <div class="value" id="priority"></div>
+    </div>
+
+    <div class="task-field">
+      <label>Type:</label>
+      <div class="value" id="type"></div>
+    </div>
+
+    <div class="task-field">
+      <label>Topic:</label>
+      <div class="value" id="topic"></div>
+    </div>
+
+    <div class="task-field">
+      <label>Assigned User:</label>
+      <div class="value" id="userName"></div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const taskParam = params.get('task');
+
+    if (taskParam) {
+      try {
+        const task = JSON.parse(decodeURIComponent(taskParam));
+        Object.entries(task).forEach(([key, value]) => {
+          const element = document.getElementById(key);
+          if (element) {
+            if (key === 'report') {
+              // Parse Markdown for the report and highlight code
+              element.innerHTML = marked.parse(value || '—');
+              Prism.highlightAll(); // highlight code blocks
+            } else {
+              element.textContent = value || '—';
+            }
+          }
+        });
+
+        const timestamp = task.id?.split('-')[0];
+        if (timestamp) {
+          const readableTime = getReadableTimeFromId(task.id);
+          const timeElement = document.getElementById('time-display');
+          if (timeElement) timeElement.textContent = readableTime;
+        }
+      } catch (err) {
+        console.error('Failed to load task:', err);
+      }
+    } else {
+      document.body.innerHTML = '<p style="text-align:center;color:red;">No task data provided.</p>';
+    }
+
+    function getReadableTimeFromId(taskId) {
+      const timestampPart = taskId.split('-')[0];
+      const year = timestampPart.slice(0, 4);
+      const month = timestampPart.slice(4, 6);
+      const day = timestampPart.slice(6, 8);
+      const hour = timestampPart.slice(8, 10);
+      const minute = timestampPart.slice(10, 12);
+      const second = timestampPart.slice(12, 14);
+      const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`);
+      return date.toLocaleString(); // Format as a readable string
+    }
+  </script>
+</body>
+</html>
+

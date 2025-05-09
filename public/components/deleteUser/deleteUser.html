@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>Task-Nest</title>
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form container styling */
+        #deleteUserForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 300px; /* Adjust width to be more compact */
+        }
+
+        /* Label styling */
+        #deleteUserForm label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Select dropdown styling */
+        #deleteUserForm select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #fafafa;
+            transition: border-color 0.3s ease;
+        }
+
+        /* Improved focus effect for the select dropdown */
+        #deleteUserForm select:focus {
+            border-color: #16a085;
+            outline: none;
+            background-color: #fff;
+        }
+
+        /* Button styling */
+        #deleteUserForm button {
+            width: 100%;
+            padding: 12px;
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        #deleteUserForm button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Optional error message styling */
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* Input select appearance */
+        #deleteUserForm select {
+            appearance: none;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="5"%3E%3Cpath d="M0 0l5 5 5-5z" fill="%23999" /%3E%3C/svg%3E');
+            background-position: right 10px center;
+            background-repeat: no-repeat;
+            padding-right: 40px;
+        }
+        
+        /* Placeholders */
+        #deleteUserForm select option {
+            color: #aaa;
+        }
+        #back {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            padding: 10px 15px;
+            background-color: #3498db; /* Blue background */
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="window.location.href='/dashboard'" id="back"> <- Back</button>
+    <form id="deleteUserForm">
+        <label for="userSelect">Select a user to delete:</label>
+        <select id="userSelect" required>
+            <option value="" disabled selected>-- Select User --</option>
+        </select>
+        <button type="submit">Delete User</button>
+    </form>
+
+    <script src="/services/authHelper.js"></script>
+    <script>
+        // Fetch all users and populate the dropdown
+        async function populateUserSelector() {
+            try {
+                const users = await AuthHelper.fetchAllUsers();
+
+                const userSelect = document.getElementById('userSelect');
+                userSelect.innerHTML = '<option value="" disabled selected>-- Select User --</option>';
+                users.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.name; // Assumes `user.id` exists
+                    option.textContent = user.name; // Fallback name
+                    userSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading users:', error);
+                alert('Failed to load users.');
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('deleteUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userName = document.getElementById('userSelect').value;
+            if (!userName) return;
+
+            const confirmed = confirm('Are you sure you want to delete ' + userName + "?");
+
+            if (confirmed) {
+                try {
+                    const response = await fetch(`/auth/delete/user?userName=${encodeURIComponent(userName)}`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${AuthHelper.validateToken().token}`
+                        }
+                    });
+                    console.log(response);
+                    if (response.ok) {
+                        alert('User deleted successfully.');
+                        // Optionally reload users
+                        document.getElementById('userSelect').innerHTML = '<option disabled selected>-- Select User --</option>';
+                        populateUserSelector();
+                    } else {
+                        alert('Failed to delete user.');
+                    }
+                } catch (error) {
+                    console.error('Error deleting user:', error);
+                    alert('Error deleting user.');
+                }
+            }
+        });
+
+        // Initial load
+        populateUserSelector();
+    </script>
+</body>
+</html>
+

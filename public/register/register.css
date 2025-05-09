@@ -1,0 +1,118 @@
+ 
+/* Global reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Registration container */
+.register-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Heading styling */
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Label styling */
+.form-group label {
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Input field styling */
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #3498db;
+    background-color: #fff;
+    outline: none;
+}
+
+/* Button styling */
+.register-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+    background-color: #2980b9;
+}
+
+.register-button:active {
+    background-color: #2471a3;
+}
+
+/* Error message styling */
+#error-message {
+    color: #e74c3c;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+#back {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 10px 15px;
+    background-color: #3498db; /* Blue background */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+

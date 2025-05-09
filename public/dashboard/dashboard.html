@@ -1,0 +1,86 @@
+<!-- /public/dashboard/dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task-Nest</title>
+    <link rel="stylesheet" href="/dashboard/dashboard.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="/components/filter/filter.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="/components/overlay/overlay.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="/components/filter/coloredStatus.css"> <!-- Link to your CSS file -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body id="dashboad-body">
+    <header>
+         <h1>Task Nest - Dashboard</h1>
+
+          <!-- Menu for "Create new Task" and "Search" -->
+          <!-- Menu for "Create new Task" -->
+          <div class="dropdown">
+            <button id="create-task-button" class="menu-button" onclick="window.location.href='/tasks/create'">Create New Task</button>
+          </div>
+
+          <!-- Menu for "Search" -->
+          <div class="dropdown">
+            <button id="search-task-button" class="menu-button" onclick="window.location.href='/tasks/search'">Search Tasks</button>
+          </div>
+
+          <!-- User management menu -->
+          <div class="dropdown">
+            <button class="menu-button">User Management</button>
+            <div class="dropdown-content">
+              <button onclick="window.location.href='/auth/register'">Add New User</button>
+              <button onclick="window.location.href='/auth/delete/user'">Delete a User</button>
+              <button onclick="localStorage.removeItem('token'); window.location.href='/dashboard/logout';">Logout</button>
+            </div>
+          </div>
+    </header>
+    <div id="dashboard-wrapper" class="dashboard-wrapper">
+        <!-- overlay -->
+        <div id="modalOverlay" class="modal-overlay hide">
+          <div class="modal-content" id="modalContent">
+            <!-- Content gets injected here -->
+            <button id="closeModal" class="close-button">Close</button>
+          </div>
+        </div>
+        <!-- Fullscreen Loading Overlay -->
+        <div id="fullscreen-loading" class="fullscreen-loading" style="display: none;">
+          <div class="spinner"></div>
+        </div>
+        <main>
+   
+            <div class="user-info">
+                <h2>Welcome, <span id="username"></span>!</h2>
+                <p>You are now logged in. What would you like to do today?</p>
+            </div>
+
+
+        </main>
+        <h3 class="tasks-title">Your tasks</h3>
+        <!-- Container to display the tasks -->
+        <div id="task-list" class="task-list-container"></div>
+        <div id="task-loading" style="display: none;">
+            <div class="spinner"></div> <!-- Add CSS for spinner below -->
+        </div>
+    </div>
+    <button id="backToTopBtn" title="Go to top">↑ Top</button>
+
+    <script src="/services/domProxy.js"></script>
+
+    <script src="/services/loadingDisplay.js"></script>
+    <script src="/services/authHelper.js"></script>
+
+    <script src="/services/filterTask.js"></script>
+    <script src="/components/filter/statusColor.js"></script>
+    <script src="/components/filter/filter.js"></script>
+
+    <script src="/services/taskCreator.js"></script>
+    <script src="/components/createTask/createTask.js"></script>
+
+    <script src="/components/overlay/overlay.js"></script>
+    <script src="/dashboard/dashboard.js"></script>
+</body>
+</html>
+

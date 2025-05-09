@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task</title>
+    <style>
+
+        .container {
+            margin: 50px auto;
+            max-height: 100%; /* Constrain vertical height */
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow:scroll;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-create-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-create-button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+        <!-- Fullscreen Loading Overlay -->
+    <div id="create-fullscreen-loading" class="fullscreen-loading" style="display: none;">
+      <div class="spinner"></div>
+    </div>
+    <div class="container">
+        <h2>Create Task</h2>
+        <form id="createTaskForm">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Task Title" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Task Description" rows="4" required></textarea>
+
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                <option value="frontend">Frontend</option>
+                <option value="backend">Backend</option>
+                <option value="extension">Extension</option>
+                <<option value="api">API</option>
+                <option value="database">Database</option>
+                <option value="devops">DevOps</option>
+                <option value="design">Design</option>
+                <option value="testing">Testing</option>
+                <option value="security">Security</option>
+                <option value="documentation">Documentation</option>
+                <option value="performance">Performance</option>
+                <option value="research">Research</option>
+                <option value="mobile">Mobile</option>
+                <option value="ui/ux">UI/UX</option>
+                <option value="integration">Integration</option>
+                <option value="bug-fix">Bug Fix</option>
+                <option value="feature-implementation">Feature Implementation</option>
+                <option value="refactoring">Refactoring</option>
+                <option value="technical-debt">Technical Debt</option>
+                <option value="user-feedback">User Feedback</option>
+                <option value="user-story">User Story</option>
+                <option value="api-integration">API Integration</option>
+                <option value="server">Server</option>
+                <option value="deployment">Deployment</option>
+                <option value="onboarding">Onboarding</option>
+                <option value="accessibility">Accessibility</option>
+                <option value="compliance">Compliance</option>
+                <option value="scalability">Scalability</option>
+                <option value="automation">Automation</option>
+                <option value="business-logic">Business Logic</option>
+                <option value="cloud">Cloud</option>
+                <option value="analytics">Analytics</option>
+                <option value="localization">Localization</option>
+                <option value="payment">Payment Integration</option>
+                <option value="third-party">Third-Party Integration</option>
+                <option value="seo">SEO</option>
+                <option value="content-management">Content Management</option>
+                <option value="product-management">Product Management</option>
+                <option value="customer-support">Customer Support</option>
+                <option value="marketing">Marketing</option>
+                <option value="sales">Sales</option>
+                <option value="legal">Legal</option>
+                <option value="partnerships">Partnerships</option>
+                <option value="training">Training</option>
+                <option value="audit">Audit</option>
+                <option value="legal-compliance">Legal Compliance</option>
+                <option value="community">Community Engagement</option>
+                <option value="scripting">Scripting</option>
+                <option value="data-migration">Data Migration</option>
+                <option value="monitoring">Monitoring</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="state">State</label>
+            <select id="state" name="state" required>
+                <option value="open">Open</option>
+                <option value="in-progress">In Progress</option>
+                <option value="closed">Closed</option>
+                <option value="on-hold">On Hold</option>
+                <option value="waiting-for-review">Waiting for Review</option>
+                <option value="completed">Completed</option>
+                <option value="backlog">Backlog</option>
+                <option value="blocked">Blocked</option>
+                <option value="ready-for-testing">Ready for Testing</option>
+                <option value="in-testing">In Testing</option>
+                <option value="under-investigation">Under Investigation</option>
+                <option value="escalated">Escalated</option>
+                <option value="reopened">Reopened</option>
+                <option value="archived">Archived</option>
+                <option value="planned">Planned</option>
+                <option value="in-design">In Design</option>
+                <option value="deferred">Deferred</option>
+                <option value="in-review">In Review</option>
+                <option value="done">Done</option>
+                <option value="waiting-for-approval">Waiting for Approval</option>
+                <option value="scheduled">Scheduled</option>
+                <option value="in-preparation">In Preparation</option>
+                <option value="pre-production">Pre-Production</option>
+                <option value="in-production">In Production</option>
+                <option value="pending">Pending</option>
+                <option value="ready-for-release">Ready for Release</option>
+                <option value="released">Released</option>
+                <option value="under-development">Under Development</option>
+                <option value="under-design">Under Design</option>
+                <option value="testing-failed">Testing Failed</option>
+                <option value="testing-passed">Testing Passed</option>
+                <option value="waiting-for-feedback">Waiting for Feedback</option>
+                <option value="needs-information">Needs Information</option>
+                <option value="resolved">Resolved</option>
+                <option value="resolved-but-not-verified">Resolved but not Verified</option>
+                <option value="verified">Verified</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="follow-up">Follow-up</option>
+                <option value="in-progress-awaiting-response">In Progress (Awaiting Response)</option>
+                <option value="under-evaluation">Under Evaluation</option>
+            </select>
+
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority" required>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="critical">Critical</option>
+                <option value="urgent">Urgent</option>
+                <option value="normal">Normal</option>
+                <option value="important">Important</option>
+                <option value="routine">Routine</option>
+                <option value="major">Major</option>
+                <option value="minor">Minor</option>
+                <option value="essential">Essential</option>
+                <option value="emergency">Emergency</option>
+            </select>
+
+            <label for="type">Type</label>
+            <select id="type" name="type" required>
+                    <option value="bug">Bug</option>
+                    <option value="feature">Feature</option>
+                    <option value="task">Task</option>
+                    <option value="improvement">Improvement</option>
+                    <option value="refactor">Refactor</option>
+                    <option value="research">Research</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="documentation">Documentation</option>
+                    <option value="test">Test</option>
+                    <option value="deployment">Deployment</option>
+                    <option value="design">Design</option>
+                    <option value="code-review">Code Review</option>
+                    <option value="security">Security</option>
+                    <option value="support">Support</option>
+                    <option value="optimization">Optimization</option>
+                    <option value="analytics">Analytics</option>
+                    <option value="setup">Setup</option>
+                    <option value="meeting">Meeting</option>
+                    <option value="integration">Integration</option>
+                    <option value="planning">Planning</option>
+                    <option value="migration">Migration</option>
+                    <option value="training">Training</option>
+                    <option value="qa">QA</option>
+                    <option value="configuration">Configuration</option>
+                    <option value="troubleshooting">Troubleshooting</option>
+                    <option value="research-spike">Research Spike</option>
+                    <option value="hotfix">Hotfix</option>
+                    <option value="rollback">Rollback</option>
+                    <option value="prototype">Prototype</option>
+                    <option value="demo">Demo</option>
+                    <option value="onboarding">Onboarding</option>
+                    <option value="offboarding">Offboarding</option>
+                    <option value="legal">Legal</option>
+                    <option value="compliance">Compliance</option>
+                    <option value="data-entry">Data Entry</option>
+                    <option value="localization">Localization</option>
+                    <option value="monitoring">Monitoring</option>
+                    <option value="performance">Performance</option>
+                    <option value="backup">Backup</option>
+            </select>
+
+            <label for="topic">Topic</label>
+            <input type="text" id="topic" name="topic" placeholder="Task Topic" required>
+
+            <label for="report">Report</label>
+            <textarea id="report" name="report" placeholder="Steps to reproduce or details" rows="4" required></textarea>
+
+            <button class="form-create-button" type="submit">Create Task</button>
+        </form>
+
+        <div class="message" id="message"></div>
+        <br>
+    </div>
+   <script src="/services/domProxy.js"></script>
+
+    <script src="/services/loadingDisplay.js"></script>
+    <script src="/services/authHelper.js"></script>
+    <script src="/services/taskCreator.js"></script>
+    <script src="/tasks/tasksCreate/createTask.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,167 @@
+.status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: white;
+}
+
+.status.open {
+    background-color: #3498db; /* Blue */
+}
+
+.status.in-progress {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.closed {
+    background-color: #2ecc71; /* Green */
+}
+
+.status.on-hold {
+    background-color: #95a5a6; /* Gray */
+}
+
+.status.waiting-for-review {
+    background-color: #f1c40f; /* Yellow */
+}
+
+.status.completed {
+    background-color: #2ecc71; /* Green */
+}
+
+.status.backlog {
+    background-color: #e74c3c; /* Red */
+}
+
+.status.blocked {
+    background-color: #e74c3c; /* Red */
+}
+
+.status.ready-for-testing {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.in-testing {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.under-investigation {
+    background-color: #e67e22; /* Orange */
+}
+
+.status.escalated {
+    background-color: #c0392b; /* Dark Red */
+}
+
+.status.reopened {
+    background-color: #9b59b6; /* Purple */
+}
+
+.status.archived {
+    background-color: #7f8c8d; /* Dark Gray */
+}
+
+.status.planned {
+    background-color: #16a085; /* Teal */
+}
+
+.status.in-design {
+    background-color: #1abc9c; /* Light Green */
+}
+
+.status.deferred {
+    background-color: #34495e; /* Dark Blue */
+}
+
+.status.in-review {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.done {
+    background-color: #2ecc71; /* Green */
+}
+
+.status.waiting-for-approval {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.scheduled {
+    background-color: #3498db; /* Blue */
+}
+
+.status.in-preparation {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.pre-production {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.in-production {
+    background-color: #1abc9c; /* Light Green */
+}
+
+.status.pending {
+    background-color: #e74c3c; /* Red */
+}
+
+.status.ready-for-release {
+    background-color: #2ecc71; /* Green */
+}
+
+.status.released {
+    background-color: #16a085; /* Teal */
+}
+
+.status.under-development {
+    background-color: #9b59b6; /* Purple */
+}
+
+.status.under-design {
+    background-color: #f1c40f; /* Yellow */
+}
+
+.status.testing-failed {
+    background-color: #e74c3c; /* Red */
+}
+
+.status.testing-passed {
+    background-color: #2ecc71; /* Green */
+}
+
+.status.waiting-for-feedback {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.needs-information {
+    background-color: #f1c40f; /* Yellow */
+}
+
+.status.resolved {
+    background-color: #2ecc71; /* Green */
+}
+
+.status.resolved-but-not-verified {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.verified {
+    background-color: #3498db; /* Blue */
+}
+
+.status.cancelled {
+    background-color: #e74c3c; /* Red */
+}
+
+.status.follow-up {
+    background-color: #9b59b6; /* Purple */
+}
+
+.status.in-progress-awaiting-response {
+    background-color: #f39c12; /* Orange */
+}
+
+.status.under-evaluation {
+    background-color: #f1c40f; /* Yellow */
+}
+

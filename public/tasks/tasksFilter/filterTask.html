@@ -1,0 +1,75 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="/components/filter/filter.css"> <!-- Link to your CSS file -->
+</head><!-- Task Filter Form -->
+
+<h1>Search</h1>
+<div class="filter-container">
+    <form id="taskFilterForm">
+        <!-- Task Name Filter -->
+        <div class="filter-group">
+            <label for="taskName">Task Name</label>
+            <input type="text" id="taskName" placeholder="Enter task name" />
+        </div>
+
+        <!-- State Filter -->
+        <div class="filter-group">
+            <label for="taskState">State</label>
+            <select id="taskState">
+                <option value="">Select State</option>
+                <option value="open">Open</option>
+                <option value="in-progress">In Progress</option>
+                <option value="closed">Closed</option>
+            </select>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-group">
+            <label for="taskCategory">Category</label>
+            <input type="text" id="taskCategory" placeholder="Enter category" />
+        </div>
+
+        <!-- Priority Filter -->
+        <div class="filter-group">
+            <label for="taskPriority">Priority</label>
+            <select id="taskPriority">
+                <option value="">Select Priority</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+        </div>
+
+        <!-- Type Filter -->
+        <div class="filter-group">
+            <label for="taskType">Type</label>
+            <select id="taskType">
+                <option value="">Select Type</option>
+                <option value="bug">Bug</option>
+                <option value="feature">Feature</option>
+                <option value="task">Task</option>
+            </select>
+        </div>
+
+        <!-- Topic Filter -->
+        <div class="filter-group">
+            <label for="taskTopic">Topic</label>
+            <input type="text" id="taskTopic" placeholder="Enter topic" />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-search">Search</button>
+    </form>
+    
+    <script src="/services/authHelper.js"></script>
+    <script src="/services/filterTask.js"></script>
+    <script src="/components/filter/filter.js"></script>
+
+    <script src="/tasks/tasksFilter/filterTask.js"></script>
+</div>
+
+<!-- Container to display the tasks -->
+<div id="task-list" class="task-list-container"></div>
+

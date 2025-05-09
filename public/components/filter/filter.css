@@ -1,0 +1,343 @@
+    .filter-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-group {
+        margin-bottom: 15px;
+    }
+
+    .filter-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    .filter-group input, .filter-group select {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .btn-search {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-search:hover {
+        background-color: #0056b3;
+    }
+
+    .task-list-container {
+        margin-top: 20px;
+    }
+
+    /* Additional styles for task display */
+    .task-card {
+        position: relative;
+        padding: 15px;
+        background-color: #fff;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .task-card h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .task-card {
+        font-size: 14px;
+        color: #777;
+    }
+
+    .task-card .category,
+    .task-card .priority {
+        font-size: 14px;
+        color: #444;
+    }
+
+
+    button {
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+      margin-right: 6px;
+      cursor: pointer;
+    }
+
+    /* Delete - Red tone */
+    button.delete {
+      background-color: #e74c3c;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    button.delete:hover {
+      background-color: #c0392b;
+    }
+.task-list-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap to the next line when necessary */
+    gap: 20px; /* Space between cards */
+    justify-content: center; /* Align items to the left */
+}
+.hashtag-group {
+    display:flex;
+    flex-wrap: wrap;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+.hashtag-default { background-color: #7f8c8d; }
+.hashtag-blue { background-color: #3498db; }
+.hashtag-green { background-color: #2ecc71; }
+.hashtag-purple { background-color: #9b59b6; }
+.hashtag-teal { background-color: #1abc9c; }
+.hashtag-orange { background-color: #e67e22; }
+.hashtag-cyan { background-color: #00bcd4; }
+.hashtag-red { background-color: #e74c3c; }
+.hashtag-pink { background-color: #fd79a8; }
+.hashtag-yellow { background-color: #f1c40f; }
+.hashtag-gray { background-color: #95a5a6; }
+/* General Card Styling */
+.task-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Title */
+.task-card h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Description */
+.task-card p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Status, Category, Topic */
+.task-card,
+.task-card .topic {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* Hashtags for Type and Priority */
+.task-card .category,
+.task-card .priority,
+.task-card .type {
+  font-size: 14px;
+  color: #16a085; /* You can change this color to match your theme */
+  font-weight: bold;
+}
+.hashtag {
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.85em;
+  margin-right: 0.5em;
+}
+.task-card {
+  color: #16a085;
+  background-color: #ecf5f3;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+/* User Assigned */
+.task-card .user-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.task-card button {
+  background-color: #34495e;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.task-card button:hover {
+  background-color: #2c3e50;
+}
+
+/* Button for delete, edit, view */
+.task-card .delete {
+  background-color: #e74c3c;
+}
+
+.task-card .delete:hover {
+  background-color: #c0392b;
+}
+
+.task-card .edit {
+  background-color: #f39c12;
+}
+
+.task-card .edit:hover {
+  background-color: #e67e22;
+}
+
+.task-card .view {
+  background-color: #2ecc71;
+}
+
+.task-card .view:hover {
+  background-color: #27ae60;
+}
+
+
+/* General Card Styling */
+.task-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  transition: transform 0.2s, box-shadow 0.2s;
+ animation: InOverlay 1s ease-in-out forwards;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Title */
+.task-card h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Description */
+.task-card p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Status, Category, Topic */
+.task-card,
+.task-card .category,
+.task-card .topic {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* Hashtags for Type and Priority */
+.task-card .priority,
+.task-card .type {
+  font-size: 14px;
+  color: #16a085; /* You can change this color to match your theme */
+  font-weight: bold;
+}
+
+
+
+/* User Assigned */
+.task-card .user-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.task-card button {
+  background-color: #34495e;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  margin-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.task-card button:hover {
+  background-color: #2c3e50;
+}
+
+/* Button for delete, edit, view */
+.task-card .delete {
+  background: none;            /* Remove button background */
+  border: none;                /* Remove button border */
+  font-size: 11px;             /* Size of the X */
+  color: black;
+}
+
+.task-card .delete:hover {
+  color: #e74c3c; 
+background: none;            /* Remove button background */
+  border: none; 
+}
+
+.task-card .edit {
+  background-color: #f39c12;
+}
+
+.task-card .edit:hover {
+  background-color: #e67e22;
+}
+
+.task-card .view {
+  background-color: #2ecc71;
+}
+
+.task-card .view:hover {
+  background-color: #27ae60;
+}
+
+.card-timestamp{
+    font-size:11px;
+    opacity: .5;
+    position: absolute;
+    bottom:0;
+    right:5px;
+}

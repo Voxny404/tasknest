@@ -1,0 +1,263 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styles */
+body {
+    background-color: #f4f7fa;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow:hidden;
+}
+
+/* Header */
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  color: white;
+  background-color: rgba(44, 62, 80, 0.8); /* translucent dark background */
+  backdrop-filter: blur(10px); /* blur the background behind */
+  -webkit-backdrop-filter: blur(10px); /* for Safari */
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+header h1 {
+    font-size: 2rem;
+}
+
+/* Main Content */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* User Info Section */
+.user-info {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.user-info h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.user-info p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+.tasks-title {
+    text-align:center;
+}
+/* Action Buttons */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.actions button {
+    padding: 15px;
+    width: 200px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.actions button:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.actions button:focus {
+    outline: none;
+}
+.dashboard-wrapper {
+    height: 100vh; 
+    overflow-y: scroll;
+    padding-top:200px;
+    padding-bottom: 2em; 
+}
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 11px;
+    margin-top: 20px;
+    position:fixed;
+    bottom:0;
+    width:100%;
+}
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #555;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 0.8s linear infinite;
+  margin: 1em auto;
+}
+/* Fullscreen dark overlay */
+.fullscreen-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* dark transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* high z-index to appear above everything */
+    animation: InOverlay .5s ease-in-out forwards;
+}
+
+#backToTopBtn {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+  z-index: 999;
+  font-size: 16px;
+  background-color:#16a085;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+#backToTopBtn:hover {
+  background-color:#138d75
+}
+
+
+/* Menu button styling */
+.menu-button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 11px;
+  border-radius: 4px;
+}
+
+.menu-button:hover {
+  background-color: #1a252f ;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+}
+
+.dropdown-content button {
+  background-color: #fff;
+  color: black;
+  padding: 12px 16px;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 11px;
+}
+
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+/* Display the dropdown when the button is clicked */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+/* Hide the track and style only the thumb */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Hide track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #16a085;  /* A shade matching #2c3e50 */
+  border-radius: 6px;
+}
+
+/* On hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #138d75; /* Slightly lighter for feedback */
+}
+/* Responsive menu - stack buttons vertically on small screens */
+@media (max-width: 600px) {
+  .menu-button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .user-info {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .actions button {
+        width: 100%;
+        font-size: 1rem;
+    }
+}
+
