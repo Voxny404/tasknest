@@ -47,16 +47,22 @@ function displayFilteredTasks(tasks, clean = false, containerId = 'task-list') {
         taskCard.classList.add('task-card');
         taskCard.setAttribute('data-task-id', task.id);
         taskCard.innerHTML = `
-            <h3>${task.title}</h3>
-            <p><strong>Description:</strong> ${task.description}</p>
-            <div class="topic"><strong>Topic:</strong> ${task.topic}</div>
-            <div class="${getStatusClass(task.state)}">Status: ${task.state}</div>
+            <h3 data-value="${task.title}">${task.title}</h3>
+            <p class="description" data-value="${task.description}"><strong>Description:</strong> ${task.description}</p>
+            <div class="topic" data-value="${task.topic}"><strong>Topic:</strong> ${task.topic}</div>
+            <div class="status ${getStatusClass(task.state)}" data-value="${task.state}">Status: ${task.state}</div>
             <div class="hashtag-group">
-                <div class="category"><span class="hashtag ${getCategoryClass(task.category)}">#${task.category}</span></div>
-                <div class="priority"><span class="hashtag ${getPriorityClass(task.priority)}">#${task.priority}</span></div>
-                <div class="type"><span class="hashtag ${getTypeClass(task.type)}">#${task.type}</span></div>
+                <div class="category" data-value="${task.category}">
+                    <span class="hashtag ${getCategoryClass(task.category)}">#${task.category}</span>
+                </div>
+                <div class="priority" data-value="${task.priority}">
+                    <span class="hashtag ${getPriorityClass(task.priority)}">#${task.priority}</span>
+                </div>
+                <div class="type" data-value="${task.type}">
+                    <span class="hashtag ${getTypeClass(task.type)}">#${task.type}</span>
+                </div>
             </div>
-            ${task.userName ? `<div class="user-name">Assigned User: ${task.userName}</div>` : ""}            
+            ${task.userName ? `<div class="user-name" data-value="${task.userName}">Assigned User: ${task.userName}</div>` : ""}
             <button class="delete">X</button>
             <div class="card-button-container">
                 <button class="edit">Edit</button>
@@ -78,17 +84,16 @@ function displayFilteredTasks(tasks, clean = false, containerId = 'task-list') {
             // Dynamically fetch current data from the DOM instead of using the stale `task` object
             const updatedTask = {
                 id: task.id,
-                title: taskCard.querySelector('h3').textContent,
-                description: taskCard.querySelector('p').textContent,
-                report: task.report, // If not shown in DOM, fallback to original
-                category: taskCard.querySelector('.category').textContent,
-                state: taskCard.querySelector('.status').textContent,
-                priority: taskCard.querySelector('.priority').textContent,
-                type: taskCard.querySelector('.type').textContent,     // If not shown, fallback to original
-                topic: taskCard.querySelector('.topic').textContent,   // Same here
-                userName: taskCard.querySelector('.user-name')?.textContent || '',
+                title: taskCard.querySelector('h3').dataset.value,
+                description: taskCard.querySelector('.description').dataset.value,
+                report: task.report,
+                category: taskCard.querySelector('.category').dataset.value,
+                state: taskCard.querySelector('.status').dataset.value,
+                priority: taskCard.querySelector('.priority').dataset.value,
+                type: taskCard.querySelector('.type').dataset.value,
+                topic: taskCard.querySelector('.topic').dataset.value,
+                userName: taskCard.querySelector('.user-name')?.dataset.value || '',
             };
-
             const taskData = encodeURIComponent(JSON.stringify(updatedTask));
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             
@@ -118,7 +123,7 @@ function displayFilteredTasks(tasks, clean = false, containerId = 'task-list') {
         taskListElement.appendChild(taskCard);
     });
 
-    updateDropdownVisibility()
+    //updateDropdownVisibility()
 }
 
 
@@ -134,24 +139,51 @@ function getReadableTimeFromId(taskId) {
       return date.toLocaleString(); // Format as a readable string
 }
 
+
+
+
 function updateTaskCard(task) {
     const taskCard = document.querySelector(`.task-card[data-task-id='${task.id}']`);
     if (!taskCard) return console.warn("updateTaskCard: cannot find task card with id", task.id);
 
-    taskCard.querySelector('h3').textContent = task.title;
-    taskCard.querySelector('p').textContent = task.description;
-    taskCard.querySelector('.status').textContent = task.state;
-    taskCard.querySelector('.category').textContent = task.category;
-    taskCard.querySelector('.priority').textContent = task.priority;
+    // Update data-value attributes using dataset
+    taskCard.querySelector('h3').dataset.value = task.title;
+    taskCard.querySelector('p.description').dataset.value = task.description;
+    taskCard.querySelector('.topic').dataset.value = task.topic;
+    taskCard.querySelector('.status').dataset.value = task.state;
+    taskCard.querySelector('.category').dataset.value = task.category;
+    taskCard.querySelector('.priority').dataset.value = task.priority;
+    taskCard.querySelector('.type').dataset.value = task.type;
 
     let userEl = taskCard.querySelector('.user-name');
-    if (!userEl) {
+    if (task.userName && !userEl) {
         userEl = document.createElement('div');
         userEl.classList.add('user-name');
         taskCard.appendChild(userEl);
     }
-    userEl.textContent = task.userName || '';
+    if (userEl) {
+        userEl.dataset.value = task.userName || '';
+        userEl.textContent = task.userName ? `Assigned User: ${task.userName}` : '';
+    }
+
+    // Update visible text content
+    taskCard.querySelector('h3').textContent = task.title;
+    taskCard.querySelector('p.description').innerHTML = `<strong>Description:</strong> ${task.description}`;
+    taskCard.querySelector('.topic').innerHTML = `<strong>Topic:</strong> ${task.topic}`;
+    
+    const statusElement = taskCard.querySelector('.status');
+    statusElement.textContent = `Status: ${task.state}`;
+    
+    // Apply dynamic class for status (color/style)
+    statusElement.className = `status ${getStatusClass(task.state)}`;
+    
+    taskCard.querySelector('.category').innerHTML = `<span class="hashtag ${getCategoryClass(task.category)}">#${task.category}</span>`;
+    taskCard.querySelector('.priority').innerHTML = `<span class="hashtag ${getPriorityClass(task.priority)}">#${task.priority}</span>`;
+    taskCard.querySelector('.type').innerHTML = `<span class="hashtag ${getTypeClass(task.type)}">#${task.type}</span>`;
 }
+
+
+
 
 // ✅ Debounce helper
 function debounce(func, delay = 200) {

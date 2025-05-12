@@ -2,40 +2,47 @@
 const taskCreator = new TaskCreator();
 
 async function populateFormWithTaskData(taskData) {
+    // Populate input and textarea fields (skip <select>)
     for (const key in taskData) {
         const element = document.getElementById(key);
-        if (element) {
-            element.value = taskData[key];
+        if (element && element.tagName !== 'SELECT') {
+            element.value = taskData[key] || '';
         }
     }
 
-    const users = await AuthHelper.fetchAllUsers();
     const userSelect = document.getElementById('userName');
+    userSelect.innerHTML = ''; // Clear existing options
 
-    // Add default option
+    const users = await AuthHelper.fetchAllUsers();
+
     const defaultOption = document.createElement('option');
     defaultOption.value = '';
     defaultOption.textContent = 'Select a user';
     defaultOption.disabled = true;
-    defaultOption.selected = !taskData.userName; // selected if userName is null or empty
+    defaultOption.selected = !taskData.userName;
     userSelect.appendChild(defaultOption);
 
-    // Populate user options
     users.forEach(user => {
         const option = document.createElement('option');
         option.value = user.name;
         option.textContent = user.name;
-
         if (user.name === taskData.userName) {
             option.selected = true;
         }
-
         userSelect.appendChild(option);
+    });
+
+    // Set <select> values for state, priority, type if applicable
+    ['state', 'priority', 'type'].forEach(selectId => {
+        const select = document.getElementById(selectId);
+        if (select && taskData[selectId]) {
+            select.value = taskData[selectId];
+        }
     });
 }
 
 function disableForm(disable) {
-    const formElements = document.querySelectorAll('#editTaskForm input, #editTaskForm select, #editTaskForm button');
+    const formElements = document.querySelectorAll('#editTaskForm input, #editTaskForm select, #editTaskForm button, #editTaskForm textarea');
     formElements.forEach((element) => {
         element.disabled = disable;
     });
@@ -43,8 +50,9 @@ function disableForm(disable) {
 
 async function handleFormSubmit(event, taskData) {
     event.preventDefault();
+
     const updatedTask = {
-        userName: document.getElementById("userName").value, 
+        userName: document.getElementById('userName').value,
         title: document.getElementById('title').value,
         description: document.getElementById('description').value,
         report: document.getElementById('report').value,
@@ -58,7 +66,7 @@ async function handleFormSubmit(event, taskData) {
     console.log("Updated Task:", updatedTask);
 
     showFullscreenLoader("edit-fullscreen-loading");
-    disableForm(true);  // Disable the form while the task is being updated
+    disableForm(true);
 
     try {
         await taskCreator.updateTask({
@@ -68,16 +76,17 @@ async function handleFormSubmit(event, taskData) {
 
         if (window.opener) {
             window.opener.postMessage({ type: 'TASK_UPDATED', payload: { ...updatedTask, id: taskData.id } }, '*');
-            // ✅ Close the popup
             window.close();
-        } else console.log("skipping task saver")
+        } else {
+            console.log("skipping task saver");
+        }
 
     } catch (error) {
         console.error('Error updating task:', error);
-        alert(error.message || 'An unexpected error occurred.', false); // Show error message
+        alert(error.message || 'An unexpected error occurred.');
     } finally {
         hideFullscreenLoader("edit-fullscreen-loading");
-        disableForm(false); // Re-enable the form
+        disableForm(false);
     }
 }
 
