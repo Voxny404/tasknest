@@ -152,4 +152,36 @@ class TaskCreator {
             throw error;
         }
     }
+
+    async populateSelectFromApi(selectId, listName) {
+        const { token } = AuthHelper.validateToken();
+        if (!token) return;
+        try {
+                const res = await fetch(`/dashboard/lists?list=${listName.toUpperCase()}`, {
+                      method: 'GET',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                      }
+                });
+                const data = await res.json();
+                if (!data[listName.toUpperCase()]) throw new Error(`Missing ${listName} list in response`);
+
+                const select = document.getElementById(selectId);
+                if (!select) throw new Error(`No <select> element with ID '${selectId}' found.`);
+
+                // Clear any existing options
+                select.innerHTML = '';
+
+                // Populate options
+                data[listName.toUpperCase()].forEach(value => {
+                  const option = document.createElement('option');
+                  option.value = value;
+                  option.textContent = value.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                  select.appendChild(option);
+                });
+        } catch (err) {
+                console.error(`Failed to populate <select> for ${listName}:`, err);
+        }
+    }
 }

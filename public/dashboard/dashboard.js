@@ -118,6 +118,8 @@ async function loadCreateTaskForm() {
     const response = await fetch('/components/createTask/createTask.html');
     const html = await response.text();
     
+    await loadOptionsForCreateTasks()
+    
     hideFullscreenLoader()
     showOverlay(html);  // Reuse your modal logic from earlier
     document.getElementById('createTaskForm').addEventListener('submit', handleFormSubmit);
@@ -133,6 +135,9 @@ async function loadSearchTaskForm() {
     showFullscreenLoader()
     const response = await fetch('/components/searchTasks/search.html');
     const html = await response.text();
+
+    await loadOptionsForSearch();
+
     hideFullscreenLoader()
     showOverlay(html);
 

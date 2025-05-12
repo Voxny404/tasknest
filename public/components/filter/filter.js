@@ -300,3 +300,10 @@ async function loadTasksByUser() {
         hideLoading();
     }
 }
+
+function loadOptionsForSearch() {
+    taskCreator.populateSelectFromApi('taskCategory', 'categories');
+    taskCreator.populateSelectFromApi('taskState', 'state');
+    taskCreator.populateSelectFromApi('taskPriority', 'priority');
+    taskCreator.populateSelectFromApi('taskType', 'types');
+}

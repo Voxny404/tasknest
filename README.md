@@ -32,7 +32,20 @@
 3. **Create environment file**  
    Add a `.env` file in the root directory with your JWT secret key:
    ```env
-   JWT_SECRET=your_super_secret_key
+    # JWT Secret for authentication
+    JWT_SECRET=your_super_secret_key
+
+    # Additional task states to be merged with default states
+    ADDITIONAL_TASK_STATES=needs-approval,qa-review,internal-review
+
+    # Additional priority levels to be merged with default levels
+    ADDITIONAL_PRIORITY_LEVELS=blocker,showstopper
+
+    # Additional categories to be added to the categories list
+    ADDITIONAL_CATEGORIES=testFromEnv
+
+    # Additional types to be added to the types list
+    ADDITIONAL_TYPES=TypeFromEnv
    ```
 
 4. **Initialize the database and start the server**  
@@ -259,6 +272,17 @@ Content-Type: application/json
 }
 ```
 
+---
+
+### `GET /dashboard/lists`
+* **Description:** Fetches available lists like categories, types, state 
+* **Authorization:** Required (Bearer Token)
+* **Example:**
+
+```http
+GET http://localhost:3000/dashboard/lists
+Authorization: Bearer <your-token>
+```
 ---
 
 ## 🧾 License
