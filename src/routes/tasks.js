@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const dbTasks = require('../sqlite/sqliteTasks');
 const jwtAuth = require('../auth/jwt');
+const validate = require('../auth/validate');
 
 router.get('/filter', jwtAuth.authMiddleware.bind(jwtAuth), (req, res) => {
     // GET /tasks/filter
@@ -86,7 +87,7 @@ router.get('/get', jwtAuth.authMiddleware.bind(jwtAuth), (req, res) => {
 });
 
 // POST create task
-router.post('/create', jwtAuth.authMiddleware.bind(jwtAuth), (req, res) => {
+router.post('/create', jwtAuth.authMiddleware.bind(jwtAuth), validate.checkRole(['admin', 'mayCreateTasks']), (req, res) => {
     // Example:
     // curl -X POST http://localhost:3000/api/tasks/create \
     //   -H "Content-Type: application/json" \
@@ -128,7 +129,7 @@ router.post('/create', jwtAuth.authMiddleware.bind(jwtAuth), (req, res) => {
 });
 
 // PATCH update task
-router.patch('/update', jwtAuth.authMiddleware.bind(jwtAuth), (req, res) => {
+router.patch('/update', jwtAuth.authMiddleware.bind(jwtAuth), validate.checkRole(['admin', 'mayEditTasks']), (req, res) => {
     // Example:
     // curl -X PATCH "http://localhost:3000/api/tasks/update?id=20240507-abc123" \
     //   -H "Content-Type: application/json" \
@@ -162,7 +163,7 @@ router.patch('/update', jwtAuth.authMiddleware.bind(jwtAuth), (req, res) => {
 });
 
 // DELETE task
-router.delete('/delete', jwtAuth.authMiddleware.bind(jwtAuth), (req, res) => {
+router.delete('/delete', jwtAuth.authMiddleware.bind(jwtAuth), validate.checkRole(['admin', 'mayDeleteTasks']), (req, res) => {
 
     // Example:
     // curl -X DELETE "http://localhost:3000/api/tasks/delete?id=20240506-abcd1234"

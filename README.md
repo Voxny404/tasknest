@@ -46,6 +46,31 @@
    node createAdminUser.js
    ```
 
+   ---
+
+## 🖥️ UI Highlights
+
+   - Tasks can include rich **Markdown-formatted reports**
+   - Inline **code syntax highlighting** using [Prism.js](https://prismjs.com/)
+   - Mobile-friendly, responsive design
+   - 🔐 Role-based UI visibility
+
+   ---
+
+## 📁 Project Structure
+
+   ```
+   tasknest/
+    ├── public/              # Frontend HTML/CSS/JS
+    |   └── dashboard/       # Main dashboard UI
+    ├── routes/              # Express routes (e.g., auth, tasks)
+    ├── services/            # Logic and database interaction
+    ├── createAdminUser.js   # Script to bootstrap an admin
+    ├── index.js             # Entry point
+    ├── .env                 # (Ignored) Environment secrets
+    └── taskNest*.sqlite     # SQLite databases (ignored)
+    ```
+
 ---
 
 ### 📡 All API routes require a valid JWT token in the `Authorization` header.
@@ -196,28 +221,42 @@ Content-Type: application/json
   "password": "your-password"
 }
 ```
-
 ---
 
-## 🖥️ UI Highlights
+### `GET /auth/user`
+* **Description:** Fetches a user's data by their username
+* **Authorization:** Required (Bearer Token)
+* **Example:**
 
-- Tasks can include rich **Markdown-formatted reports**
-- Inline **code syntax highlighting** using [Prism.js](https://prismjs.com/)
-- Mobile-friendly, responsive design
-
----
-
-## 📁 Project Structure
-
+```http
+GET http://localhost:3000/auth/user?userName=alice
+Authorization: Bearer <your-token>
 ```
-tasknest/
-├── public/              # Frontend HTML/CSS/JS
-├── routes/              # Express routes (e.g., auth, tasks)
-├── services/            # Logic and database interaction
-├── createAdminUser.js   # Script to bootstrap an admin
-├── index.js             # Entry point
-├── .env                 # (Ignored) Environment secrets
-└── taskNest*.sqlite     # SQLite databases (ignored)
+---
+
+### `POST /auth/user/roles`
+* **Description:** Updates the roles for a given user (admin or `mayEditUserRole` required)
+* **Authorization:** Required (Bearer Token)
+
+* **Example:**
+
+```http
+POST http://localhost:3000/auth/user/roles
+Authorization: Bearer <your-token>
+Content-Type: application/json
+
+{
+"userName": "alice",
+"roles":[
+        "admin",
+        "mayDeleteUsers",
+        "mayCreateUsers",
+        "mayCreateTasks",
+        "mayEditTasks",
+        "mayDeleteTasks",
+        "mayEditUserRole"
+    ]
+}
 ```
 
 ---

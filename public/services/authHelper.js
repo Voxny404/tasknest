@@ -53,5 +53,32 @@ class AuthHelper {
         return await response.json();
     }
 
+    static async fetchUser(user) {
+        const { token } = this.validateToken();
+        try {
+            
+            const response = await fetch(`/auth/user?userName=${encodeURIComponent(user)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch user roles');
+            }
+
+            return await response.json();
+        } catch (error) {
+            alert("Booting out")
+            localStorage.removeItem('token')
+            window.location.href='/auth/login'
+            return;
+        }
+    }
+
+
+
 }
 

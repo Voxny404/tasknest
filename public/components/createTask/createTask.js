@@ -45,7 +45,7 @@ async function handleFormSubmit(event) {
         
     } catch (error) {
         // Display error message if task creation fails
-        displayMessage(error.message || "An unexpected error occurred.", false);
+        alert(error.message || "An unexpected error occurred.");
     } finally {
         // Always hide fullscreen loader and re-enable the form
         hideFullscreenLoader("create-fullscreen-loading");

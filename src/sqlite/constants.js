@@ -56,8 +56,18 @@ const PRIORITY_LEVELS = [
   "emergency"
 ];
 
+const AVAILABLE_ROLES = [
+    "admin",
+    "mayDeleteUsers",
+    "mayCreateUsers",
+    "mayCreateTasks",
+    "mayEditTasks",
+    "mayDeleteTasks",
+    "mayEditUserRole"
 
+]
 module.exports = {
     TASK_STATES,
-    PRIORITY_LEVELS
+    PRIORITY_LEVELS,
+    AVAILABLE_ROLES
 };

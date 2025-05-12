@@ -1,0 +1,236 @@
+<!DOCTYPE html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>Edit User</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #444;
+        }
+
+        select, input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .checkbox-group {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .checkbox-group label {
+            font-weight: normal;
+            margin-bottom: 0.3rem;
+        }
+
+        .button-save {
+            margin-top: 1.5rem;
+            width: 100%;
+            padding: 0.9rem;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-save :hover {
+            background-color: #0056b3;
+        }
+
+        #status {
+            margin-top: 1rem;
+            font-weight: 500;
+            color: #006400;
+        }
+        #back {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            padding: 10px 15px;
+            background-color: #3498db; /* Blue background */
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #555;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 0.8s linear infinite;
+      margin: 1em auto;
+    }
+    /* Fullscreen dark overlay */
+    .fullscreen-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.6); /* dark transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000; /* high z-index to appear above everything */
+        animation: InOverlay .5s ease-in-out forwards;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    </style>
+</head>
+<body>
+    <button onclick="window.location.href='/dashboard'" id="back"> <- Back</button>
+     <br>
+     <br>
+    <h1>Task-Nest - Edit User</h1>
+    <div id="fullscreen-loading" class="fullscreen-loading" style="display: none;">
+      <div class="spinner"></div>
+    </div>
+ 
+    <form id="editUserForm">
+        <label for="userSelect">Select User:</label>
+        <select id="userSelect" required>
+            <option value="" disabled selected>-- Select User --</option>
+        </select>
+
+        <label>Assign Roles:</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="roles" value="admin"> Admin</label>
+            <label><input type="checkbox" name="roles" value="mayDeleteUsers"> Delete Users</label>
+            <label><input type="checkbox" name="roles" value="mayCreateUsers"> Create Users</label>
+            <label><input type="checkbox" name="roles" value="mayCreateTasks"> Create Tasks</label>
+            <label><input type="checkbox" name="roles" value="mayEditTasks"> Edit Tasks</label>
+            <label><input type="checkbox" name="roles" value="mayDeleteTasks"> Delete Tasks</label>
+            <label><input type="checkbox" name="roles" value="mayEditUserRole"> Edit User Role</label>
+        </div>
+
+        <button class="button-save"  type="submit">Save Changes</button>
+    </form>
+
+    <p id="status"></p>
+
+    <script src="/services/authHelper.js"></script>
+ 
+    <script src="/services/domProxy.js"></script>
+    <script src="/services/loadingDisplay.js"></script>
+<script>
+    let allUsers = [];
+
+    async function populateUserSelector() {
+        showFullscreenLoader()
+        try {
+            allUsers = await AuthHelper.fetchAllUsers();
+            const userSelect = document.getElementById('userSelect');
+            userSelect.innerHTML = '<option value="" disabled selected>-- Select User --</option>';
+
+            allUsers.forEach(user => {
+                const option = document.createElement('option');
+                option.value = user.name;
+                option.textContent = user.name;
+                userSelect.appendChild(option);
+            });
+
+            userSelect.addEventListener('change', handleUserSelection);
+
+        } catch (error) {
+            console.error('Error loading users:', error);
+            alert('Failed to load users.');
+        }
+        hideFullscreenLoader()
+    }
+
+    function handleUserSelection(event) {
+        const selectedUserName = event.target.value;
+        const user = allUsers.find(u => u.name === selectedUserName);
+        const roles = user && user.roles ? JSON.parse(user.roles) : [];
+
+        // Uncheck all first
+        document.querySelectorAll('input[name="roles"]').forEach(cb => {
+            cb.checked = roles.includes(cb.value);
+        });
+    }
+
+    populateUserSelector();
+
+    document.getElementById('editUserForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const userName = document.getElementById('userSelect').value;
+        const roleCheckboxes = document.querySelectorAll('input[name="roles"]:checked');
+        const roles = Array.from(roleCheckboxes).map(cb => cb.value);
+
+        const body = { userName, roles };
+        
+        showFullscreenLoader()
+        try {
+            const res = await fetch('/auth/user/roles', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify(body)
+            });
+            if (!res.ok) alert("Something went wrong !!")
+            else {
+                const result = await res.json();
+                document.getElementById('status').textContent = result.message || 'Roles updated.';
+            }
+        } catch (error) {
+            alert('Failed to update roles.')
+            document.getElementById('status').textContent = 'Failed to update roles.';
+            console.error(error);
+        }
+        hideFullscreenLoader()
+    });
+</script>
+</body>
+</html>
+

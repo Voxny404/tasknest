@@ -165,7 +165,6 @@
                             'Authorization': `Bearer ${AuthHelper.validateToken().token}`
                         }
                     });
-                    console.log(response);
                     if (response.ok) {
                         alert('User deleted successfully.');
                         // Optionally reload users

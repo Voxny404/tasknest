@@ -17,7 +17,6 @@
          <h1>Task Nest - Dashboard</h1>
 
           <!-- Menu for "Create new Task" and "Search" -->
-          <!-- Menu for "Create new Task" -->
           <div class="dropdown">
             <button id="create-task-button" class="menu-button" onclick="window.location.href='/tasks/create'">Create New Task</button>
           </div>
@@ -31,8 +30,9 @@
           <div class="dropdown">
             <button class="menu-button">User Management</button>
             <div class="dropdown-content">
-              <button onclick="window.location.href='/auth/register'">Add New User</button>
-              <button onclick="window.location.href='/auth/delete/user'">Delete a User</button>
+                <button id="create-user-button" onclick="window.location.href='/auth/register'">Add New User</button>
+                <button id="edit-user-role-button" onclick="window.location.href='/auth/user/roles'">Edit User Roles</button>
+                <button id="delete-user-button" onclick="window.location.href='/auth/delete/user'">Delete a User</button>
               <button onclick="localStorage.removeItem('token'); window.location.href='/dashboard/logout';">Logout</button>
             </div>
           </div>

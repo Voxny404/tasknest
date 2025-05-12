@@ -30,7 +30,7 @@ class JwtAuth {
     decodeToken(token) {
         return jwt.decode(token); // returns payload or null, doesn't throw
     }
-
+    
     authMiddleware = (req, res, next) => {
             const authHeader = req.headers.authorization;
             if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -53,6 +53,7 @@ class JwtAuth {
             }
 
             req.user = payload.user; // attach user to request
+            
             next();
     }
 }

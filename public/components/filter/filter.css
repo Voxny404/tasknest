@@ -85,7 +85,11 @@
       margin-right: 6px;
       cursor: pointer;
     }
-
+.card-button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px; /* Optional for spacing between buttons */
+}
     /* Delete - Red tone */
     button.delete {
       background-color: #e74c3c;

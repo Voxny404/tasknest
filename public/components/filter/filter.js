@@ -58,8 +58,10 @@ function displayFilteredTasks(tasks, clean = false, containerId = 'task-list') {
             </div>
             ${task.userName ? `<div class="user-name">Assigned User: ${task.userName}</div>` : ""}            
             <button class="delete">X</button>
-            <button class="edit">Edit</button>
-            <button class="view">View</button>
+            <div class="card-button-container">
+                <button class="edit">Edit</button>
+                <button class="view">View</button>
+            </div>
             <div class="card-timestamp">${getReadableTimeFromId(task.id)}</div>
         `;
 
@@ -115,6 +117,8 @@ function displayFilteredTasks(tasks, clean = false, containerId = 'task-list') {
 
         taskListElement.appendChild(taskCard);
     });
+
+    updateDropdownVisibility()
 }
 
 
