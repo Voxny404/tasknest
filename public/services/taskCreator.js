@@ -128,4 +128,28 @@ class TaskCreator {
             return false;
         }
     }
+    async fetchTaskData(taskId) {
+        const { token } = AuthHelper.validateToken();
+        if (!token) return;
+
+        try {
+            
+            const response = await fetch(`/api/tasks/get?id=${taskId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }
+            });
+
+            if (!response.ok) {
+              throw new Error('Task not found');
+            }
+            const task = await response.json();
+            return task;
+        } catch (error) {
+            console.error('Failed to fetch task:', error);
+            throw error;
+        }
+    }
 }
