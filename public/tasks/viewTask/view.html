@@ -143,51 +143,63 @@
     </div>
   </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const taskParam = params.get('task');
+     <script src="/services/authHelper.js"></script>
+    <script src="/services/taskCreator.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const taskSearh = params.get('task'); // This now holds the task ID
+  const taskId = JSON.parse(taskSearh).id;
 
-    if (taskParam) {
-      try {
-        const task = JSON.parse(decodeURIComponent(taskParam));
-        Object.entries(task).forEach(([key, value]) => {
-          const element = document.getElementById(key);
-          if (element) {
-            if (key === 'report') {
-              // Parse Markdown for the report and highlight code
-              element.innerHTML = marked.parse(value || '—');
-              Prism.highlightAll(); // highlight code blocks
-            } else {
-              element.textContent = value || '—';
+  const taskCreator = new TaskCreator(); // Ensure this is initialized
+
+  if (taskId) {
+    taskCreator.fetchTaskData(taskId)
+      .then(task => {
+        if (task) {
+          // Update the DOM with the task data
+          Object.entries(task).forEach(([key, value]) => {
+            const element = document.getElementById(key);
+            if (element) {
+              if (key === 'report') {
+                element.innerHTML = marked.parse(value || '—');
+                Prism.highlightAll(); // Highlight code blocks
+              } else {
+                element.textContent = value || '—';
+              }
             }
+          });
+
+          // Format and display the timestamp (if available)
+          const timestamp = task.id?.split('-')[0];
+          if (timestamp) {
+            const readableTime = getReadableTimeFromId(task.id);
+            const timeElement = document.getElementById('time-display');
+            if (timeElement) timeElement.textContent = readableTime;
           }
-        });
-
-        const timestamp = task.id?.split('-')[0];
-        if (timestamp) {
-          const readableTime = getReadableTimeFromId(task.id);
-          const timeElement = document.getElementById('time-display');
-          if (timeElement) timeElement.textContent = readableTime;
+        } else {
+          document.body.innerHTML = '<p style="text-align:center;color:red;">Task not found.</p>';
         }
-      } catch (err) {
-        console.error('Failed to load task:', err);
-      }
-    } else {
-      document.body.innerHTML = '<p style="text-align:center;color:red;">No task data provided.</p>';
-    }
+      })
+      .catch(err => {
+        console.error('Failed to fetch task:', err);
+        document.body.innerHTML = '<p style="text-align:center;color:red;">Error fetching task data.</p>';
+      });
+  } else {
+    document.body.innerHTML = '<p style="text-align:center;color:red;">No task ID provided.</p>';
+  }
 
-    function getReadableTimeFromId(taskId) {
-      const timestampPart = taskId.split('-')[0];
-      const year = timestampPart.slice(0, 4);
-      const month = timestampPart.slice(4, 6);
-      const day = timestampPart.slice(6, 8);
-      const hour = timestampPart.slice(8, 10);
-      const minute = timestampPart.slice(10, 12);
-      const second = timestampPart.slice(12, 14);
-      const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`);
-      return date.toLocaleString(); // Format as a readable string
-    }
-  </script>
+  function getReadableTimeFromId(taskId) {
+    const timestampPart = taskId.split('-')[0];
+    const year = timestampPart.slice(0, 4);
+    const month = timestampPart.slice(4, 6);
+    const day = timestampPart.slice(6, 8);
+    const hour = timestampPart.slice(8, 10);
+    const minute = timestampPart.slice(10, 12);
+    const second = timestampPart.slice(12, 14);
+    const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`);
+    return date.toLocaleString(); // Format as a readable string
+  }
+</script>
 </body>
 </html>
 
