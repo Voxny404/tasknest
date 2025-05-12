@@ -63,3 +63,10 @@ function disableForm(disable) {
         element.disabled = disable;
     });
 }
+
+function loadOptionsForCreateTasks() {
+    taskCreator.populateSelectFromApi('category', 'categories');
+    taskCreator.populateSelectFromApi('state', 'state');
+    taskCreator.populateSelectFromApi('priority', 'priority');
+    taskCreator.populateSelectFromApi('type', 'types');
+}

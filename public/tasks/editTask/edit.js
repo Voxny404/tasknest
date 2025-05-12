@@ -98,7 +98,15 @@ async function applyEditEventListener(taskData) {
     });
 }
 
+function loadOptionsForEdit() {
+    taskCreator.populateSelectFromApi('category', 'categories');
+    taskCreator.populateSelectFromApi('state', 'state');
+    taskCreator.populateSelectFromApi('priority', 'priority');
+    taskCreator.populateSelectFromApi('type', 'types');
+}
 window.addEventListener('DOMContentLoaded', () => {
+    loadOptionsForEdit()
+
     const params = new URLSearchParams(window.location.search);
     const taskParam = params.get('task');
 
