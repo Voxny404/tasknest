@@ -123,7 +123,7 @@ function displayFilteredTasks(tasks, clean = false, containerId = 'task-list') {
         taskListElement.appendChild(taskCard);
     });
 
-    //updateDropdownVisibility()
+    updateDropdownVisibility()
 }
 
 
